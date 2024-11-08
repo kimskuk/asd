@@ -1,0 +1,101 @@
+[systemctl start ..]
+ypserv.service
+yppasswdd.service
+ypxfrd.service
+
+nisdomainname name
+/etc/sysconfig/network
+NISDOMAIN=ihd.or.kr
+
+yum install ypbind
+ypbind, yp-tools
+ypbind.service
+
+ypcat -> check mapfile ex)ypcat passwd.byname(print about nis server user)
+yptest -> test nis setting
+yppasswd -> change passwd ex) yppasswd lin
+ypchsh -> change shell
+ypchfn -> change user info
+ypwhich -> check NIS server(print NIS server name) -m : mapfile
+
+/etc/samba/smb.conf
+[global]
+workgroup
+server string(desciption_
+netbios name=MYSERVER
+interfaces = lo eth0 192.168.12.1/24
+hosts allow = 127. 192.168.12 EXCEPT 192.168.1.11
+log file=/var/log
+max log size
+
+[homes]
+comment(description)
+path=/var/www/html
+read only = yes
+wriatble = yes
+write list = smbuser @manager(group)
+valid users
+public = no
+browseable = no
+creat mask=0644
+follow symlinks = no
+printable = yes
+
+smbpasswd -a : add user
+-x ; delete user
+-d : inactive user
+-e : active user
+-n : remove password
+
+pdbedit -L : list samba user
+-v : detail information
+-u user
+-a : add user
+-r change user
+-x delete user
+
+smbclient -L, --list
+-M, --message
+-U --user
+-P --port
+
+smbclient //192.168.45.223/smbuser/ -U smbuser
+smbclient \\\\192.168.45.223\\smbuser\\ -U smbuser
+
+mount -t cifs //192.168.45.223/smbuser /smbuser -o user=
+mount.cifs
+
+smbstatus
+testparm(samba settting)
+nmblookup
+smbcontrol
+
+NFS
+yum install rpcbind nfs-utils
+/etc/exports
+[share dircet]      [allow-host](option)
+/var/youngjin-nfs 192.168.45.0/24(rw, no_root_squash)
+
+no_root_squash : root enable
+root_squash : root deny
+all_squash : all user(include root) deny
+anonuid 
+
+mount -t nfs 192.168.45.223:/var/youngjin-nfs /var/youngjin-local
+
+/etc/fstab
+192.168.45.223/var/youngjin-nfs /var/youngjin-local nfs timeo=15,soft 0 0
+
+rpcinfo
+exportfs -v  (shared outside info verbose print)
+-r
+-a
+showmount -e 192.168.12.22 (NFS client -> NFS server 192.168.12.22 shared info check)
+rpcinfo
+nfsstat
+
+
+vsftpd/ftpusers -> deny FTP access
+vsfpd.conf
+anonymous_enable=YES
+chroot_local_user=YES

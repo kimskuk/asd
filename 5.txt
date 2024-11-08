@@ -1,0 +1,46 @@
+rpm -i fiile.rpm :install
+rpm -U file.rpm : upgrade
+rpm --nodeps, test
+rpm -e : erase
+
+which, where
+
+rpm -qc vsftpd : package conf file
+rpm -qR vsfptd : dep relation file,library, list
+rpm -qlp totem-....rpm : show package will be installed which file/dircetory
+rpm -qi : extensive about rpm
+rpm -ql : list of package
+rpm -qa : find all package
+rpm -q packagename
+rpm -qf file_name : what package filename
+rpm -v package_name : extensive inform
+rpm -V package : verify
+
+ldd /path -> check dynamic library
+
+yum search
+yum whatprovides /usr/share/git-core/contrib/hooks/setgitperms.perl(=qf)
+yum update && install
+yum erase
+yum info
+/etc/yum.conf,
+/etc/yum.repos.d
+yum clean all ->  cache clear
+yum install yum-utils
+yumdownloader unbound
+yum localinstall unbound-...
+yum history
+yum history info 7
+yum history undo 7 -y
+yum history redo 7 -y
+
+tar -xvzf package-name.version.tar.gz
+./configure
+make
+make install
+
+gcc -o file_name : exe file name
+gcc -c file_name : o file make
+
+tar
+compress/uncompress

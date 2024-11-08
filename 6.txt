@@ -1,0 +1,76 @@
+/etc/passwd
+username : password(X) : uid : gid : description : homedir : shell
+/etc/shadow
+username : password : last change : min : max : E : X : end day
+/etc/group 
+group name : password : group controller : member
+
+/etc/login.defs - user account value setting
+PASS_MAX_DAYS
+...
+UID_MIN, MAX
+
+/etc/skel : when useradd in the /etc/skel directory copy to home directory
+/etc/login.def : check algorithm
+
+who -m = who am i
+w -> user what play process, what system login
+logname : current login
+id
+groups
+lslogins(wtmp, btmp)
+
+pwconv : /etc/passwd -> /etc/shadow
+pwunconv : /etc/passwd,/etc/shadow -> /etc/passwd(/etc/shadow delete)
+grpconv : /etc/group -> /etc/gshadow
+grpunconv : /etc/group, /etc/gshadow -> /etc/group(etc/gshadow delete)
+
+pwck(check /etc/passwd)
+grpck(check /etc/groups)
+
+.
+chown owner file
+chown myuser myfile1.txt myfile2.txt myfile3.txt
+chown myuser:mygroup myfile
+chgrp mygroup blue.txt
+
+4 -> set-UID 2->set-GID 1-> sticky
+
+1. fdisk device
+2. mkfs device(mke2fs device)
+   mkfs -t ext4 /dev/sda2
+   mkfs.sfs = mkfs -t xfs 
+   mke2fs -j(ext3) -b 2048 -T largefile -E stride=32 /dev/sda1
+3. mount
+/etc/mtab -> now mount
+/etc/fstab -> permenant mount
+/dev/sdb1(device)  mount location  swap/ext2/ext3(filesystem) defaults, userquota(option)  0-nobackup,1-backup(dump)  filecheck(0 no check)
+
+fsck
+e2fsck
+
+[make swap]
+dd if=/dev/zero of=/swapfile bs=1024 count=1048576
+chmod 600 /swapfile
+mkswap /swapfile -> cho gi hwa
+swapon /swapfile  -> on the system
+swapon -s (status)
+/etc/fstab -> /swapfile swap swap defaults 0 0
+
+[delete swap]
+swapoff -v /swapfile
+/etc/fstab-> delete
+rm /swapfile
+
+quotacheck /quota-test -> check filesystem and update quota setting
+quotacheck -aug
+quotacheck -mf /quota-test
+
+edquota francis -> Vi editor
+repquota filesystem-directory
+
+quota user/group(print) -> print user/group quota informaiton
+
+quotaon/quotaoff filesystem-drictory
+
+setquota -u bob 2097152(block-soft) 2097152(block-hard) 100000(inode-soft) 1000000(inode-hard) /
