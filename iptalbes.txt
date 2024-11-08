@@ -1,0 +1,59 @@
+iptables -t(nat/filter/mangle/row/security) [action] [chain] [match rule] -j target
+
+action
+-N : new chain
+-X : delete chain except INPUT/output/forward
+-L : list
+-F : delete all chain rule
+-P : default policy
+-Z : packet count make 0
+-A : append policy at last
+-I chain num: insert specific line
+-D chain num : delete specific policy
+-R chain num : replace plicy
+
+match
+-s : source ip
+-d : destination ip
+! : excpet
+-p : protocol(tcp,udp)
+-i : input interface
+-o : output interface
+--sport : source port
+--dport : target port
+--tcp-flags : SYN, ACK, FIN,...
+--syn : only syn
+--icmp-type : echo-request(8), echo-reply(0)..
+--m : match
+--state 
+
+[etc option]
+-n, --numeric : numbering protocol
+-v, --verbose : packet + byte ..etc
+--line-numblers : infront fo line number
+
+-j
+ACCEPT
+REJECT(DROP + Message)
+DROP
+LOG
+RETURN
+
+iptabales -A INPUT -s 192.68.10.7 -d localhost -j DROP
+iptables -A INPUT -s 192.168.10.7 -p icmp -j REJECT
+iptables -A INPUT -s 192.168.10.0/24 ! -p icmp -j ACCEPT
+iptables -A OUTPUT -p tcp -d www.youngin-test.com --dport 80 -o eht0 -j DROP
+iptables -L INPUT --line-numbers
+iptables -D INPUT 3
+iptables -P INPUT DROP
+iptables -A INPUT -s 192.168.10.7 -j ACCEPT
+iptables -P INPUT ACCEPT
+iptables -A INPUT -s 192.168.10.7 -j DROP
+iptables -A INPUT -p tcp -dport 10:100 -j DROP
+iptables -A INPUT -p tcp --dport 80 --syn -m limit --limit 100/s -j ACCEPT
+
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 222.235.10.7
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 222.235.10.7-222.234.10.25
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT MASQUERADE
+iptables -t nat -A PREROUTING -p tcp -d 223.235.10.7 --dprot 80 -j DNAT --to 192.168.10.7:80
+iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 80 -j REDIRECT --to-port 8080

@@ -1,0 +1,91 @@
+400 bad req
+401 unauthor
+402 payment require
+403 forbidden
+404 not found
+405 method no allowd
+408 request timeout
+curl https://datatracker.ietf.org/doc/html/rfc2616#section-10
+
+[apache configure option]
+wget http://archive.apache.org/dist/httpd/httpd-2.4.37.tar.bz2
+--prefix=/usr/local/apache
+--enable-mods-shared=all(DSO method)
+--enable-so
+--enable-ssl
+--with-mpm=MPM
+--with-port=PORT
+--disable-status
+--enable-disk-cache
+--enable-mem-cache
+
+[mysql configure option]
+-DCMAKE_INSTALL_PREFIX=/usr/local/mysql
+-DDEFAULT_CHARSET=utf8
+-DMYSQL_DATADIR=/usr/local/mysql/data
+-DDOWNLOAD_BOOST=1
+-DWITH_BOOST=pathname
+
+[php option]
+--prefix=/usr/local/php
+--with-apx2(DSO)
+--with-mysql=mysql path
+--with-config-file-paht=/usr/local/apache/conf(php.ini path)
+
+/usr/local/apache/bin/apachectl restart
+
+ab
+apachectl
+htpasswd
+htdigest
+httpd
+
+<Directory> ~ </Directory>
+None -> all reject
+All -> default
+AllowOverride - none : no allow, all : .htaccess, AuthConfig
+Order Deny, Allow
+Deny from all
+Allow from 192.11.11.0/255.255.255.0
+
+httpd-vhost.conf
+<VirtualHost *:80>
+ ServerAdmin
+ DocumentRoot
+ ServerName
+ ErrorLog
+</VirtualHost>
+httpd -S(check vIrtualHost)
+
+httpd-autoindex.conf
+IndexOptions
+AddIconByType
+DefaultIcon
+AddDescription
+ReadmeName
+HeaderName
+IndexIgnore
+
+default.conf/httpd-default.conf
+Timeout
+KeepAlive
+MaxPeepAliveRequest
+KeepAliveTimeout
+UseCannonicalName
+AccessFileName
+ServerToken
+ServerSignature
+HostnameLookups
+
+htpasswd -c /etc/passwdord master
+htpasswd -D : delete
+htpasswd -s : SHA
+
+<Directory "/var/www/html/admin">
+AllowOverride Authconfig
+
+make /var/www/html/admin/.htaccess(which Directory)
+AuthType Basic
+AuthName "Master Login"
+AuthUserFile /etc/password
+Require valid-user(user name)

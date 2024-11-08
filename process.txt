@@ -1,0 +1,45 @@
+kill -l -> table
+kill -9 -1(all shut except 1)
+killall ->(default sigterm)
+pkill -HUP syslogd
+
+jobs
+fg 3
+bg 3
+nohup
+
+nice (-20-best ~ 19)
+nice --10 bash : 10 minus
+nice -10 bash : 10 plus
+renice 13 987
+renice -n priority
+
+pgrep 
+/proc/PIC
+
+/proc/cmdline
+cpuinfo
+devices
+fb
+filesystems
+interrupts
+iomem
+ioports
+kallsyms
+loadavg
+meminfo
+misc
+mounts
+partitions
+stat
+swaps
+uptime
+version
+mdstat
+
+at/atq/atrm
+
+cron
+min hour day month week username command
+crontab -e u francis
+/etc/cron.allow,deny

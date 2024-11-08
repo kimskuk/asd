@@ -1,0 +1,53 @@
+/etc/mail/sendmail.cf -> sendmail setting file
+Cw : mail receiver host name
+Fw : many domain name
+Ft : Trust user
+Dj : Tx domain name enforce
+Dn : return message name enforce
+
+/etc/mail/sendmail.mc : m4 sendmail.mc > sendmail.cf
+/etc/aliases
+recive account: delivery account
+:include:[filename]
+webmaster: ihduser, kaituser
+admin: :include:/etc/mail_admin
+
+/etc/mail/access
+makemap hash /etc/mail/access < /etc/mail/access
+Connect:127.0.0.1 	OK
+From:abnormal@youngjin-mail.com	REJECT
+To:youngjin-mail.com 	RELAY
+RELAY, DISCARD, REJECT(after discard, sned massage), OK(DNS fail accept)
+
+/etc/mail/virtusertable
+makemap hash /etc/mail/virtusertable < /etc/mail/virtusertable
+info@foo.com foo-info
+info@bar.com bar-info
+virtual mail account  delivery Account
+
+sendmail -bq(queue status)
+sendmail -bi(aliases update)
+oQ
+
+mailq
+
+acl "ihd" {192.168.2.24; 192.168.4/24;};
+Zone "linux.or.kr" IN{
+type master(slave);
+file "linux.zone";
+};
+
+Zone "3.109.210.in-addr.arpa" IN {
+...
+};
+
+IN NS ns.ihd.or.kr.
+IN  A 192.168.12.22
+IN MX 10 ihd.or.kr
+www IN A 192.168.12.22
+www1 IN CNAME www
+
+named-checkzone
+named-checkconf
+rndc status
+host

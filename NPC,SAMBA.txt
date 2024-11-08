@@ -1,0 +1,93 @@
+[systemctl start ..]
+ypserv.service
+yppasswdd.service
+ypxfrd.service
+
+nisdomainname name
+
+ypbind, yp-tools
+ypbind.service
+
+ypcat -> check mapfile
+yptest -> test nis setting
+yppasswd -> change passwd
+ypchsh -> change shell
+ypchfn -> change user info
+ypwhich -> check NIS server
+
+/etc/samba/smb.conf
+[global]
+workgroup
+server string(desciption_
+netbios name=MYSERVER
+interfaces = lo eth0 192.168.12.1/24
+hosts allow = 127. 192.168.12 EXCEPT 192.168.1.11
+log file=/var/log
+max log size
+
+[homes]
+comment(description)
+path=/var/www/html
+read only = yes
+wriatble = yes
+write list = smbuser @manager(group)
+valid users
+public = no
+browseable = no
+creat mask=0644
+follow symlinks = no
+printable = yes
+
+smbpasswd -a : add user
+-x ; delete user
+-d : inactive user
+-e : active user
+-n : remove password
+
+pdbedit -L : list samba user
+-v : detail information
+-u user
+-a : add user
+-r change user
+-x delete user
+
+smbclient -L, --list
+-M, --message
+-U --user
+-P --port
+
+smbclient //192.168.45.223/smbuser/ -U smbuser
+smbclient \\\\192.168.45.223\\smbuser\\ -U smbuser
+
+mount -t cifs //192.168.45.223/smbuser /smbuser -o user=
+
+smbstatus
+testparm(samba settting)
+nmblookup
+smbcontrol
+
+NFS
+yum install rpcbind nfs-utils
+/etc/exports
+/var/youngjin-nfs 192.168.45.0/24(rw, no_root_squash)
+
+no_root_squash : root enable
+root_squash : root deny
+all_squash : all user(include root) deny
+anonuid 
+
+mount -t nfs 192.168.45.223:/var/youngjin-nfs /var/youngjin-local
+
+/etc/fstab
+192.168.45.223/var/youngjin-nfs /var/youngjin-local nfs timeo=15,soft 0 0
+
+rpcinfo
+exports -v
+-r
+=a
+showmount
+nfsstat
+
+
+vsfpd.conf
+anonymous_enable=YES
