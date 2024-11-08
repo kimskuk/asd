@@ -1,0 +1,69 @@
+mdadm
+vg/lg/pvcreate
+
+LVM
+pcvscan : PV information print
+vgscan : vg informaiton print
+pvcreate : make pv
+pvcreate /dev/sdb1
+vgcreate : make vg
+vgcreate lvm0 /dev/sdb1 /dev/sdc1
+vgcreate -s 16M lvm0 /dev/sdb1
+vgdisplay lvm0 
+lvcreate -L(size) 2000M -n(name) backup [vgname]
+lvcreate -i(stripe number) 2 -L 1G -n striped_lv
+lvscan : find all lv
+lvdisplay [lvname] : print lv information
+vgextend : VG append by add PV
+vgreduce
+lvextend -L +20G [LVname]
+lvreduce
+lvrename
+lvremove
+vgchange
+vgremove
+pvmove
+fsadm check /dev/lvm0/data1
+fsadm resize /dev...
+
+ex)
+fdisk -> make partion(8e)
+pvcreate /dev/sdb1
+pvcreate /dev/sdb2
+
+vgcreate lvm0 /dev/sdb1 /dev/sdb2
+vgdisplay -v
+
+lvcreate -L 1200M -n Idata1 lvm0
+
+lvscan
+vgdisplay - v
+
+mkfs.xfs /dev/lvm0/Idata1
+
+mkdir /Idata1
+
+mount -t xfs /dev/lvm0/Idata1 /Idata1
+
+/etc/fstab
+/dev/lvm0/Idata1 /Idata1 xfs  defaults 0 0
+
+[extend]
+pvcreate /dev/sdb3
+vgextend lvm0 /dev/sdb3
+vgdisplay -v
+
+umount /dev/lvm0/Idata1
+lvextend -L +1G /dev/lvm0/Idata1
+
+lvscan
+
+mount -t xfs /dev/lvm0/Idata1 /Idata1
+
+
+[mdadm]
+mdadm -C(create) /dev/md0 -l(Raid level) 0 -n(device number) 2 /dev/sdb1 /dev/sdc1
+mdadm -D /dev/md0(show verbose information)
+mdadm -S(stop) /dev/md0
+mdadm /dev/md1 -f(force error) /dev/sdb6
+mdadm /dev/md2 -a(add) /dev/sdb14  (-r = remove)

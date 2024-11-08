@@ -3,7 +3,7 @@ uname -r
 make mrporper(make clean < make mrproper < make distclean) except kernal setting, include kernal setting, mrproper backup&patch file 
 make menuconfig(make config, make menuconfig, make nconfig, make xconfig, make gconfig) text, dialog+list, color menu, xwindow, GTK+
 make bzImage
-make modules -> module compile
+make modules -> module compile(select module create, select with m)
 make install -> lib/modules/kernel-verision
 make modules_install -> image copy, grup.conf install
 reboot
@@ -40,3 +40,9 @@ xsane(scanner)
 sane-find-scanner
 scanimage -L
 scanimage > image.pnm
+
+LVM
+pvcreate /dev/sdb1 /dev/sdc1 -> 2 partition complimnet hard volume
+vgcreate lvm0 /dev/sdb1 /dev/sdc1 -> hardvolume compliment lvm0(volume group)
+lvcreate -L 2000M -n kdata1 lvm0 ( 2GB logical volume which name is kdata1)
+

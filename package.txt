@@ -3,6 +3,11 @@ rpm -U file.rpm : upgrade
 rpm --nodeps, test
 rpm -e : erase
 
+which, where
+
+rpm -qc vsftpd : package conf file
+rpm -qR vsfptd : dep relation file,library, list
+rpm -qlp totem-....rpm : show package will be installed which file/dircetory
 rpm -qi : extensive about rpm
 rpm -ql : list of package
 rpm -qa : find all package
@@ -10,6 +15,8 @@ rpm -q packagename
 rpm -qf file_name : what package filename
 rpm -v package_name : extensive inform
 rpm -V package : verify
+
+ldd /path -> check dynamic library
 
 yum search
 yum whatprovides /usr/share/git-core/contrib/hooks/setgitperms.perl(=qf)

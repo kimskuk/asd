@@ -4,16 +4,19 @@ yppasswdd.service
 ypxfrd.service
 
 nisdomainname name
+/etc/sysconfig/network
+NISDOMAIN=ihd.or.kr
 
+yum install ypbind
 ypbind, yp-tools
 ypbind.service
 
-ypcat -> check mapfile
+ypcat -> check mapfile ex)ypcat passwd.byname(print about nis server user)
 yptest -> test nis setting
-yppasswd -> change passwd
+yppasswd -> change passwd ex) yppasswd lin
 ypchsh -> change shell
 ypchfn -> change user info
-ypwhich -> check NIS server
+ypwhich -> check NIS server(print NIS server name) -m : mapfile
 
 /etc/samba/smb.conf
 [global]
@@ -60,6 +63,7 @@ smbclient //192.168.45.223/smbuser/ -U smbuser
 smbclient \\\\192.168.45.223\\smbuser\\ -U smbuser
 
 mount -t cifs //192.168.45.223/smbuser /smbuser -o user=
+mount.cifs
 
 smbstatus
 testparm(samba settting)
@@ -69,6 +73,7 @@ smbcontrol
 NFS
 yum install rpcbind nfs-utils
 /etc/exports
+[share dircet]      [allow-host](option)
 /var/youngjin-nfs 192.168.45.0/24(rw, no_root_squash)
 
 no_root_squash : root enable
@@ -82,12 +87,15 @@ mount -t nfs 192.168.45.223:/var/youngjin-nfs /var/youngjin-local
 192.168.45.223/var/youngjin-nfs /var/youngjin-local nfs timeo=15,soft 0 0
 
 rpcinfo
-exports -v
+exportfs -v  (shared outside info verbose print)
 -r
-=a
-showmount
+-a
+showmount -e 192.168.12.22 (NFS client -> NFS server 192.168.12.22 shared info check)
+rpcinfo
 nfsstat
 
 
+vsftpd/ftpusers -> deny FTP access
 vsfpd.conf
 anonymous_enable=YES
+chroot_local_user=YES

@@ -5,6 +5,14 @@ username : password : last change : min : max : E : X : end day
 /etc/group 
 group name : password : group controller : member
 
+/etc/login.defs - user account value setting
+PASS_MAX_DAYS
+...
+UID_MIN, MAX
+
+/etc/skel : when useradd in the /etc/skel directory copy to home directory
+/etc/login.def : check algorithm
+
 who -m = who am i
 w -> user what play process, what system login
 logname : current login
@@ -54,14 +62,14 @@ swapoff -v /swapfile
 /etc/fstab-> delete
 rm /swapfile
 
-quotacheck /quota-test
+quotacheck /quota-test -> check filesystem and update quota setting
 quotacheck -aug
 quotacheck -mf /quota-test
 
 edquota francis -> Vi editor
 repquota filesystem-directory
 
-quota user/group(print)
+quota user/group(print) -> print user/group quota informaiton
 
 quotaon/quotaoff filesystem-drictory
 

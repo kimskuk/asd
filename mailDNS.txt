@@ -5,12 +5,18 @@ Ft : Trust user
 Dj : Tx domain name enforce
 Dn : return message name enforce
 
+/etc/mail/local-host-names
+
 /etc/mail/sendmail.mc : m4 sendmail.mc > sendmail.cf
-/etc/aliases
+/etc/aliases - some account -> another account
 recive account: delivery account
 :include:[filename]
 webmaster: ihduser, kaituser
 admin: :include:/etc/mail_admin
+
+newaliases
+sendmail -bi
+sendmail -l
 
 /etc/mail/access
 makemap hash /etc/mail/access < /etc/mail/access
@@ -19,11 +25,17 @@ From:abnormal@youngjin-mail.com	REJECT
 To:youngjin-mail.com 	RELAY
 RELAY, DISCARD, REJECT(after discard, sned massage), OK(DNS fail accept)
 
-/etc/mail/virtusertable
+/etc/mail/virtusertable -> one mailserver many domain- need same mail account -> forwarding
 makemap hash /etc/mail/virtusertable < /etc/mail/virtusertable
 info@foo.com foo-info
 info@bar.com bar-info
 virtual mail account  delivery Account
+
+~/.forward
+chmod 600 .forward
+posein@naver.com
+
+/etc/resolv.conf
 
 sendmail -bq(queue status)
 sendmail -bi(aliases update)
@@ -31,6 +43,7 @@ oQ
 
 mailq
 
+[DNS]
 acl "ihd" {192.168.2.24; 192.168.4/24;};
 Zone "linux.or.kr" IN{
 type master(slave);
@@ -41,6 +54,8 @@ Zone "3.109.210.in-addr.arpa" IN {
 ...
 };
 
+$TTL 1D
+@ in soa ns.ihd.or.kr kait.ihd.or.kr->admin kait@ihd.or.kr
 IN NS ns.ihd.or.kr.
 IN  A 192.168.12.22
 IN MX 10 ihd.or.kr
@@ -51,3 +66,66 @@ named-checkzone
 named-checkconf
 rndc status
 host
+
+
+squid
+/etc/squid/squid.conf
+cache_dir
+http_port 3128
+acl local src 192.168.10.0/255.255.255.0
+http_access allow local
+http_access deny all
+
+acl [name] src [ip]
+acl [name] dst [ip]
+acl [name] port [port]
+acl [name] srcdomain[domain]
+acl [name]dstdomain [domain]
+
+cache_mem 2048MB
+cache_log [path]
+
+DHCP
+host ihd_pc { 
+hardware ethernet 99:....;
+fixed-address 192.168.12.22; 
+}
+
+subnet 192.168.10.0 netmask 255.255.255.0 {
+range 192.168.10.10 192.168.10.200;
+option domain-name "iht.or.kr";
+option domian-name-server name.youngijn.com;
+option routers 192.168.10.1;(Gateway)
+option broadcast-address 192.168.10.255;
+default-lease-time 600;
+max-lease-time 7200;
+}
+
+NTP
+/etc/ntp.conf
+driftfile /path/
+restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap
+server 0.centos.pool.ntp.org iburst
+keys /etc/ntp/keys
+
+ntpupdate
+ntpq
+
+chrony
+/etc/chrony.conf
+pool 0.centos....
+startumweight 0
+driftfile /path/
+makestep 1.0 3
+allow 192.168.0.0/16
+keyfile /etc/chron
+
+chronyc sources -v
+chronyc -a makestep
+chronyc traking
+
+vnc
+yum install tigervnc-server
+vncpasswd
+Xvnc
+vncconfig

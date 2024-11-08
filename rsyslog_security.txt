@@ -56,6 +56,7 @@ getfacl file1
 -R : recursive acl
 -p : pwd
 
+/etc/sysctl.conf -> permanant setting
 sysctl -a
 sysctl -n net.ipv4.icmp_echo_ignore_all
 sysctl -w net.ip4.icmp_echo_ignore_all=1
