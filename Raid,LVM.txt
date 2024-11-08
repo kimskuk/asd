@@ -67,3 +67,6 @@ mdadm -D /dev/md0(show verbose information)
 mdadm -S(stop) /dev/md0
 mdadm /dev/md1 -f(force error) /dev/sdb6
 mdadm /dev/md2 -a(add) /dev/sdb14  (-r = remove)
+
+mkfs.xfs /dev/md0
+mount -t xfs /dev/md0 /rdata0

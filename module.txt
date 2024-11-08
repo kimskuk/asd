@@ -46,3 +46,5 @@ pvcreate /dev/sdb1 /dev/sdc1 -> 2 partition complimnet hard volume
 vgcreate lvm0 /dev/sdb1 /dev/sdc1 -> hardvolume compliment lvm0(volume group)
 lvcreate -L 2000M -n kdata1 lvm0 ( 2GB logical volume which name is kdata1)
 
+blkid /dev/sda1 -> print uid
+dumpe2fs /dev/sda1 -> print block size info 
