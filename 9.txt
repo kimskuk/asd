@@ -89,3 +89,29 @@ AuthType Basic
 AuthName "Master Login"
 AuthUserFile /etc/password
 Require valid-user(user name)
+
+
+httpd-info.conf
+<Location /server-status> ~ </Location>
+setHandler server-status
+Order deny,allow
+Allow from .example.com
+
+httpd-mpm.conf
+<ifModule mpm_prefork_module>
+ StartServers 5
+ MinSpareServers 5
+ MaxSpareservers 10
+ MaxRequestWorkers 150
+ MaxConnectionPerChild 0
+</IfModule>
+
+
+<ifModule mpm_worker_module>
+ StartServers 5
+ MinSpareThread 5
+ MaxSpareThread 10
+ ThreadsPerChild
+ MaxRequestWorkers 150
+ MaxConnectionPerChild 0
+</IfModule>
